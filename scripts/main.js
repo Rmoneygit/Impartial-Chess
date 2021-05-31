@@ -68,6 +68,9 @@ function place_chessman(x, y) {
 function draw() {
     clear();
     draw_grid(80, 80, 'gray', 'white');
+    if(game_started) {
+        highlight_legal();
+    }
     place_chessman(piece_x, piece_y);
 }
 
@@ -109,7 +112,7 @@ function move_piece(x, y) {
         }
     }
     else {
-        start = x;
+        start_x = x;
         start_y = y;
     }
 }
@@ -122,6 +125,22 @@ function check_move(curr_x, curr_y, new_x, new_y) {
         return true;
     }
     return false;
+}
+
+function highlight_legal() {
+    for(var horiz = 65; horiz <= 72; horiz++) {
+        for(var vert = 0; vert <= 7; vert++) {
+            if(check_move(piece_x.charCodeAt(0), piece_y, horiz, vert)) {
+                fill(color(0, 0, 255, 50));
+                let sz = g_canvas.cell_size;
+                let height = sz * g_canvas.hgt;
+                let diff = horiz - 65;
+                let xpos = diff*80;
+                let ypos = height - vert*80 - 80;
+                rect(xpos, ypos, 80, 80);
+            }
+        }
+    }
 }
 
 function start_game() {
