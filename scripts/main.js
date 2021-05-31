@@ -2,6 +2,10 @@
 var g_canvas = { cell_size:30.55, wid:21, hgt:21 }; // JS Global var, w canvas size info.
 var piece_x = "D"
 var piece_y = 4
+var game_started = false;
+var start_x = "D"
+var start_y = 4
+var player = 1;
 
 function setup() // P5 Setup Fcn
 {
@@ -82,7 +86,7 @@ function mousePressed() {
                 let code = diff + 65;
                 console.log(code);
                 let ch = String.fromCharCode(code);
-                if(check_move(piece_x.charCodeAt(0), piece_y, code, ycount)) {
+                if(!game_started || check_move(piece_x.charCodeAt(0), piece_y, code, ycount)) {
                     move_piece(ch, ycount);
                 }
             }
@@ -95,6 +99,19 @@ function move_piece(x, y) {
     piece_x = x;
     piece_y = y;
     console.log(`${piece_x}, ${piece_y}`);
+
+    if(game_started) {
+        player = (player) % 2 + 1;
+        document.getElementById('game-text').innerHTML = `Player ${player}\'s Turn`;
+
+        if(piece_x === "A" && piece_y === 0) {
+            document.getElementById('game-text').innerHTML = `Player ${player} Wins!`;
+        }
+    }
+    else {
+        start = x;
+        start_y = y;
+    }
 }
 
 function check_move(curr_x, curr_y, new_x, new_y) {
@@ -105,4 +122,19 @@ function check_move(curr_x, curr_y, new_x, new_y) {
         return true;
     }
     return false;
+}
+
+function start_game() {
+    if(!game_started) {
+        game_started = true;
+        document.getElementById('game_button').innerHTML = 'Quit Game';
+        document.getElementById('game-text').innerHTML = `Player ${player}\'s Turn`;
+    }
+    else {
+        game_started = false;
+        player = 1;
+        document.getElementById('game_button').innerHTML = 'Start Game';
+        document.getElementById('game-text').innerHTML = `Place the chessman on the board.`;
+        move_piece(start_x, start_y);
+    }
 }
