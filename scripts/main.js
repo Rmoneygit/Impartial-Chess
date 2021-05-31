@@ -104,11 +104,12 @@ function move_piece(x, y) {
     console.log(`${piece_x}, ${piece_y}`);
 
     if(game_started) {
-        player = (player) % 2 + 1;
-        document.getElementById('game-text').innerHTML = `Player ${player}\'s Turn`;
-
         if(piece_x === "A" && piece_y === 0) {
             document.getElementById('game-text').innerHTML = `Player ${player} Wins!`;
+        }
+        else {
+            player = (player) % 2 + 1;
+            document.getElementById('game-text').innerHTML = `Player ${player}\'s Turn`;
         }
     }
     else {
