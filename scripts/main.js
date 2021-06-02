@@ -132,6 +132,11 @@ function check_move(type, curr_x, curr_y, new_x, new_y) {
             return true;
         }
     }
+    else if(type === "♝") {
+        if((xdiff === ydiff) &&  (xdiff > 0 && ydiff > 0)) {
+            return true;
+        }
+    }
     return false;
 }
 
