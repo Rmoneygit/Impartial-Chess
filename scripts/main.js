@@ -127,6 +127,11 @@ function check_move(type, curr_x, curr_y, new_x, new_y) {
             return true;
         }
     }
+    else if(type === "♜") {
+        if((xdiff > 0 && ydiff === 0) || (ydiff > 0 && xdiff === 0)) {
+            return true;
+        }
+    }
     return false;
 }
 
@@ -140,6 +145,7 @@ function highlight_legal() {
                 let xpos = diff*rminor;
                 let ypos = height - vert*rminor - rminor;
                 rect(xpos, ypos, rminor, rminor);
+                highlights++;
             }
         }
     }
