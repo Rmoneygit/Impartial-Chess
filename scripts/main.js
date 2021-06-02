@@ -5,6 +5,7 @@ let width = sz * g_canvas.wid;  // Our 'canvas' uses cells of given size, not 1x
 let height = sz * g_canvas.hgt;
 var rminor = 80;
 
+var type = "♚";
 var piece = { x:"D", y:4 };
 var start = { x:"D", y:4 };
 
@@ -16,7 +17,7 @@ function setup() // P5 Setup Fcn
     var canvas = createCanvas( width, height );  // Make a P5 canvas.
     canvas.parent('canvas-holder');
     draw_grid(rminor, 'gray', 'white');
-    place_chessman(piece.x, piece.y);
+    place_chessman(type, piece.x, piece.y);
 }
 
 // =====================================================  draw_grid ====
@@ -53,14 +54,14 @@ function draw_grid( rminor, rstroke, rfill  )
     }
 }
 
-function place_chessman(x, y) {
+function place_chessman(type, x, y) {
     fill(0,128,0);
     textSize(50);
     let code = x.charCodeAt(0);
     let diff = code - 65;
     let xpos = diff*rminor + sz/2;
     let ypos = height - y*rminor - sz/2;
-    text("♚", xpos, ypos);
+    text(type, xpos, ypos);
 }
 
 function draw() {
@@ -69,14 +70,14 @@ function draw() {
     if(game_started) {
         highlight_legal();
     }
-    place_chessman(piece.x, piece.y);
+    place_chessman(type, piece.x, piece.y);
 }
 
 function mousePressed() {
     console.log(`${mouseX}, ${mouseY}`);
-    for(var ix = 0; ix < width; ix += rminor) {
+    for(var ix = 0; ix < width - rminor; ix += rminor) {
         let ycount = 7;
-        for (var iy = 0; iy < height; iy += rminor)
+        for (var iy = 0; iy < height -rminor; iy += rminor)
         {
             if(mouseX > ix && mouseX < ix + rminor && mouseY > iy && mouseY < iy + rminor) {
                 let diff = Math.ceil((ix - sz/2)/rminor);
@@ -149,4 +150,8 @@ function start_game() {
         document.getElementById('game-text').innerHTML = `Place the chessman on the board.`;
         move_piece(start.x, start.y);
     }
+}
+
+function change_piece() {
+    type = document.getElementById('type-picker').value;
 }
