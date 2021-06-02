@@ -84,7 +84,7 @@ function mousePressed() {
                 let code = diff + 65;
                 console.log(code);
                 let ch = String.fromCharCode(code);
-                if(!game_started || check_move(piece.x.charCodeAt(0), piece.y, code, ycount)) {
+                if(!game_started || check_move(type, piece.x.charCodeAt(0), piece.y, code, ycount)) {
                     move_piece(ch, ycount);
                 }
             }
@@ -99,7 +99,7 @@ function move_piece(x, y) {
     console.log(`${piece.x}, ${piece.y}`);
 
     if(game_started) {
-        if(piece.x === "A" && piece.y === 0) {
+        if(!highlight_legal()) {
             document.getElementById('game-text').innerHTML = `Player ${player} Wins!`;
         }
         else {
@@ -113,20 +113,28 @@ function move_piece(x, y) {
     }
 }
 
-function check_move(curr_x, curr_y, new_x, new_y) {
+function check_move(type, curr_x, curr_y, new_x, new_y) {
     let xdiff = curr_x - new_x;
     let ydiff = curr_y - new_y;
 
-    if((ydiff === 0 || ydiff === 1) && ((xdiff === 0 || xdiff === 1)) && (xdiff || ydiff)) {
-        return true;
+    if(type === "♚") {
+        if((ydiff === 0 || ydiff === 1) && ((xdiff === 0 || xdiff === 1)) && (xdiff || ydiff)) {
+            return true;
+        }
+    }
+    else if(type === "♞") {
+        if((xdiff === 2 && (ydiff === -1 || ydiff === 1) || (ydiff === 2 && (xdiff === -1 || xdiff === 1)))) {
+            return true;
+        }
     }
     return false;
 }
 
 function highlight_legal() {
+    let highlights = 0;
     for(var horiz = 65; horiz <= 72; horiz++) {
         for(var vert = 0; vert <= 7; vert++) {
-            if(check_move(piece.x.charCodeAt(0), piece.y, horiz, vert)) {
+            if(check_move(type, piece.x.charCodeAt(0), piece.y, horiz, vert)) {
                 fill(color(0, 0, 255, 50));
                 let diff = horiz - 65;
                 let xpos = diff*rminor;
@@ -135,6 +143,7 @@ function highlight_legal() {
             }
         }
     }
+    return highlights;
 }
 
 function start_game() {
