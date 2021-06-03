@@ -18,12 +18,22 @@
             <label for="type-picker">
                 <span>Chessman type:</span>
             </label>
-            <select id="type-picker"  onchange="change_piece()">
+            <select id="type-picker" onchange="change_piece()">
                 <option value="♚">King</option>
                 <option value="♞">Knight</option>
                 <option value="♜">Rook</option>
                 <option value="♝">Bishop</option>
             </select>
+        </p>
+        <p class="center">
+            <label for="board-sizer">
+                <span>Board size:</span>
+            </label>
+            <div id="board-sizer"class="center">
+                <input id="rows" type="number" min="1" max="8" step="1" value="8" size="8" onchange="resize_board()"> 
+                by 
+                <input id="cols" type="number" min="1" max="8" step="1" value="8" size="8" onchange="resize_board()">
+            </div>
         </p>
     </body>
 </html>

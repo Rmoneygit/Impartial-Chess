@@ -4,3 +4,7 @@
     padding: 10px;
     text-align: center;
   }
+
+  input[type="select"]:disabled {
+    background: #a8a8a8;
+  }
