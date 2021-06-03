@@ -194,7 +194,7 @@ function resize_board() {
         let ch = String.fromCharCode(code - 1);
         move_piece(ch, piece.y);
     }
-    if(piece.y > 0) {
+    if(piece.y > g_canvas.hgt - 1) {
         move_piece(piece.x, piece.y - 1);
     }
 }
