@@ -189,12 +189,12 @@ function resize_board() {
     width = sz * g_canvas.wid;
     height = sz * g_canvas.hgt;
     let code = piece.x.charCodeAt(0);
-    let horiz = code - 65;
-    if(horiz > g_canvas.wid - 1) {
-        let ch = String.fromCharCode(code - 1);
+    let max_code = g_canvas.wid + 65;
+    if(code > max_code - 1) {
+        let ch = String.fromCharCode(max_code - 1);
         move_piece(ch, piece.y);
     }
     if(piece.y > g_canvas.hgt - 1) {
-        move_piece(piece.x, piece.y - 1);
+        move_piece(piece.x, g_canvas.hgt - 1);
     }
 }
