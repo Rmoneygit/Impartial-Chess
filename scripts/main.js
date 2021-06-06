@@ -10,6 +10,7 @@ var start = { x:"D", y:4 };
 
 var game_started = false;
 var player = 1;
+var num_boards = 1;
 
 function setup() // P5 Setup Fcn
 {
@@ -19,7 +20,7 @@ function setup() // P5 Setup Fcn
     place_chessman(type, piece.x, piece.y);
 }
 
-function draw_grid(sz, rstroke, rfill ) 
+function draw_grid(sz, rstroke, rfill, offset=0) 
 {
     let code = 65; // Character A in ASCII
     let col = g_canvas.hgt - 1; // Column numbering
@@ -27,7 +28,7 @@ function draw_grid(sz, rstroke, rfill )
     stroke( rstroke );
     fill( rfill );
 
-    for (var ix = 0; ix < width; ix += sz)
+    for (var ix = 0 + offset; ix < width + offset; ix += sz)
     {
         strokeWeight(1);
         line(ix, 0, ix, height);
@@ -42,10 +43,10 @@ function draw_grid(sz, rstroke, rfill )
     for (var iy = 0; iy < height; iy += sz)
     {
         strokeWeight(1);
-        line(0, iy, width, iy);
+        line(offset, iy, width + offset, iy);
         strokeWeight(1);
         fill(0, 102, 153);
-        text(col, sz * 0.0625, iy + sz * 0.1875);
+        text(col, sz * 0.0625 + offset, iy + sz * 0.1875);
         col -= 1;
     }
 }
@@ -63,7 +64,9 @@ function place_chessman(type, x, y) {
 
 function draw() {
     clear();
-    draw_grid(sz, 'gray', 'white');
+    for(var i = 0; i < num_boards; i++) {
+        draw_grid(sz, 'gray', 'white', 640*i + 200*i);
+    }
     if(game_started) {
         highlight_legal();
     }
@@ -105,8 +108,8 @@ function move_piece(x, y) {
         }
     }
     else {
-        start.x = x;
-        start.y = y;
+        start.x = piece.x;
+        start.y = piece.y;
     }
 }
 
@@ -197,4 +200,10 @@ function resize_board() {
     if(piece.y > g_canvas.hgt - 1) {
         move_piece(piece.x, g_canvas.hgt - 1);
     }
+}
+
+function add_sub_board() {
+    num_boards = document.getElementById('board-add-sub').value;
+    // We need 640 pixels for each board (to accomodate max size of 8x8), plus 200 for each intervening space
+    resizeCanvas(640 * num_boards + (num_boards - 1) * 200, 640);
 }

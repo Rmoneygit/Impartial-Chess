@@ -14,28 +14,46 @@
         <div class="center"><button id='game_button' onclick="start_game()">Start Game</button></div>
         <div id='game-text' class="center">Place the chessman on the board.</div>
         <div id='canvas-holder' class="center"></div>
-        <div id="central-controls" class="central-controls">
-            <p class="center">
-                <label for="type-picker">
-                    <span>Chessman type:</span>
-                </label>
-                <select id="type-picker" onchange="change_piece()">
-                    <option value="♚">King</option>
-                    <option value="♞">Knight</option>
-                    <option value="♜">Rook</option>
-                    <option value="♝">Bishop</option>
-                </select>
-            </p>
-            <p class="center">
-                <label for="board-sizer">
-                    <span>Board size:</span>
-                </label>
-                <div id="board-sizer"class="center">
-                    <input id="rows" type="number" min="1" max="8" step="1" value="8" size="8" onchange="resize_board()"> 
-                    by 
-                    <input id="cols" type="number" min="1" max="8" step="1" value="8" size="8" onchange="resize_board()">
-                </div>
-            </p>
+        <div id="float-container" class="float-container center">
+            <div id="l-child" class="float-child">
+                <p class="left">
+                    <label for="board-picker">
+                        <span>Board selected:</span>
+                    </label>
+                    <select id="board-picker" onchange="change_board()">
+                        <option value="1">Board 1</option>
+                    </select>
+                </p>
+                <p class="left">
+                    <label for="board-add-sub">
+                        <span>Number of Boards:</span>
+                    </label>
+                    <input id="board-add-sub" type="number" min="1" max="4" step="1" value="1" size="1" onchange="add_sub_board()">
+                </p>
+            </div>
+            <div id="c-child" class="float-child-c">         
+                <p class="center">
+                    <label for="type-picker">
+                        <span>Chessman type:</span>
+                    </label>
+                    <select id="type-picker" onchange="change_piece()">
+                        <option value="♚">King</option>
+                        <option value="♞">Knight</option>
+                        <option value="♜">Rook</option>
+                        <option value="♝">Bishop</option>
+                    </select>
+                </p>
+                <p class="center">
+                    <label for="board-sizer">
+                        <span>Board size:</span>
+                    </label>
+                    <div id="board-sizer"class="center">
+                        <input id="rows" type="number" min="1" max="8" step="1" value="8" size="8" onchange="resize_board()"> 
+                        by 
+                        <input id="cols" type="number" min="1" max="8" step="1" value="8" size="8" onchange="resize_board()">
+                    </div>
+                </p>
+            </div>
         </div>
     </body>
 </html>
